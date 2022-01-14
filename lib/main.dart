@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'screen/home_screen.dart';
 
-void main() {
+void main() async {
+  /*SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);*/
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -22,7 +28,9 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       // ignore: prefer_const_literals_to_create_immutables
-      supportedLocales: [const Locale('fr', 'FR')],
+      supportedLocales: [
+        const Locale('fr', 'FR'),
+      ],
       debugShowCheckedModeBanner: false,
       title: 'Fin alert application',
       theme: ThemeData(
