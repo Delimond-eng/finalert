@@ -7,12 +7,13 @@ class CostumChexkBox extends StatelessWidget {
   final Function onChanged;
   final String title;
   final bool hasColored;
+  final double fontSize;
   const CostumChexkBox({
     Key key,
     this.value = false,
     this.onChanged,
     this.title,
-    this.hasColored = false,
+    this.hasColored = false, this.fontSize,
   }) : super(key: key);
 
   @override
@@ -20,7 +21,7 @@ class CostumChexkBox extends StatelessWidget {
     return GestureDetector(
       onTap: onChanged,
       child: Container(
-        height: 50.0,
+        height: !hasColored ? null : 50.0,
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(5.0),
         decoration: (hasColored)
@@ -91,15 +92,13 @@ class CostumChexkBox extends StatelessWidget {
                 title,
                 style: (hasColored)
                     ? GoogleFonts.lato(
-                        letterSpacing: 1.0,
                         color: (value) ? Colors.white : Colors.black87,
-                        fontSize: 14.0,
+                        fontSize: (fontSize== null) ? 12.0 : fontSize,
                         fontWeight: (value) ? FontWeight.w600 : FontWeight.w400,
                       )
                     : GoogleFonts.lato(
-                        letterSpacing: 1.0,
                         color: Colors.black,
-                        fontSize: 15.0,
+                        fontSize: (fontSize== null) ? 12.0 : fontSize,
                         fontWeight: FontWeight.w400,
                       ),
               ),

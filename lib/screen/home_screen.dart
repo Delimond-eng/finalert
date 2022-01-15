@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:finalert/global/dialog.dart';
 import 'package:finalert/global/style.dart';
 import 'package:finalert/pages/announces/announcing_page.dart';
 import 'package:finalert/pages/denonciations/identiy_anonymous_page.dart';
+import 'package:finalert/widgets/custom_check_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -75,13 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: "Je dénonce...",
                         description: "Dénoncez tout type de tracasseries",
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              child: IdentityAnonymousPage(),
-                              type: PageTransitionType.leftToRightWithFade,
-                            ),
-                          );
+                          selectDenonciationAndGo(context);
                         },
                       ),
                       HomeMenuBtn(
@@ -105,6 +102,94 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  bool hasAnonymous = false;
+  bool hasIdentity = false;
+  Future<void> selectDenonciationAndGo(context) async {
+    Modal.show(
+      context,
+      height: 230.0,
+      title: "Type de dénonciation",
+      modalContent: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+          child: StatefulBuilder(
+            builder: (context, setter) {
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text(
+                      "Sélectionnez le type de dénonciation !",
+                      style: GoogleFonts.lato(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    CostumChexkBox(
+                      fontSize: 16.0,
+                      hasColored: true,
+                      title: "Dénonciation Anonyme",
+                      value: hasAnonymous,
+                      onChanged: () {
+                        setter(() {
+                          hasIdentity = false;
+                          hasAnonymous = true;
+                        });
+                        if (hasAnonymous) {
+                          Get.back();
+                          setter(() {
+                            hasAnonymous = false;
+                            hasIdentity = false;
+                          });
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              child: IdentityAnonymousPage(),
+                              type: PageTransitionType.leftToRightWithFade,
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    CostumChexkBox(
+                      fontSize: 16.0,
+                      hasColored: true,
+                      title: "Dénonciation avec identité",
+                      value: hasIdentity,
+                      onChanged: () {
+                        setter(() {
+                          hasAnonymous = false;
+                          hasIdentity = true;
+                        });
+                        if (hasIdentity) {
+                          Get.back();
+                          setter(() {
+                            hasAnonymous = false;
+                            hasIdentity = false;
+                          });
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              child: IdentityAnonymousPage(),
+                              type: PageTransitionType.leftToRightWithFade,
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                    // ignore: sized_box_for_whitespace
+                  ],
+                ),
+              );
+            },
+          )),
     );
   }
 

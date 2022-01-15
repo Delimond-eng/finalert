@@ -89,11 +89,28 @@ class _IdentityAnonymousPageState extends State<IdentityAnonymousPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Flexible(
-                        child: CostumChexkBox(
-                          hasColored: false,
-                          onChanged: () {},
-                          title: "Monsieur",
-                          value: true,
+                        child: Container(
+                          width: 80.0,
+                          child: CostumChexkBox(
+                            hasColored: false,
+                            onChanged: () {},
+                            title: "Mr",
+                            value: true,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Flexible(
+                        child: Container(
+                          width: 100.0,
+                          child: CostumChexkBox(
+                            hasColored: false,
+                            onChanged: () {},
+                            title: "Mme",
+                            value: true,
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -103,17 +120,11 @@ class _IdentityAnonymousPageState extends State<IdentityAnonymousPage> {
                         child: CostumChexkBox(
                           hasColored: false,
                           onChanged: () {},
-                          title: "Madame",
-                          value: true,
+                          title: "Personne morale",
+                          value: false,
                         ),
                       ),
                     ],
-                  ),
-                  CostumChexkBox(
-                    hasColored: false,
-                    onChanged: () {},
-                    title: "Personne morale",
-                    value: false,
                   ),
                   const SizedBox(
                     height: 10.0,
