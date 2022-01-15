@@ -216,6 +216,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Container(
+                    height: 100.0,
+                    width: 100.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withOpacity(.7),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(.3),
+                          blurRadius: 12.0,
+                          offset: const Offset(0, 8),
+                        )
+                      ],
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/logo.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   Text(
                     "FinAlert",
                     style: GoogleFonts.lato(
@@ -226,16 +248,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 20.0,
+                    height: 10.0,
                   ),
                   Text(
                     "Loger vos plaintes pour dénonciation au Ministère de finance",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
                       color: Colors.white,
-                      fontSize: 20.0,
+                      fontSize: 18.0,
                       letterSpacing: 1.0,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.w400,
                     ),
                   )
                 ],
@@ -250,17 +272,17 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Container(
                   width: _size.width / 3,
-                  height: 2.0,
+                  height: 4.0,
                   color: primaryColor,
                 ),
                 Container(
                   width: _size.width / 3,
-                  height: 2.0,
+                  height: 4.0,
                   color: accentColor,
                 ),
                 Container(
                   width: _size.width / 3,
-                  height: 2.0,
+                  height: 4.0,
                   color: secondaryColor,
                 ),
               ],
@@ -302,41 +324,45 @@ class HomeMenuBtn extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onPressed,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                icon,
-                height: 50.0,
-                width: 50.0,
-              ),
-              SizedBox(
-                height: 5.0,
-              ),
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.lato(
-                  color: accentSchemeColor,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w900,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  icon,
+                  height: 50.0,
+                  width: 50.0,
+                  color: accentColor,
                 ),
-              ),
-              SizedBox(
-                height: 5.0,
-              ),
-              Text(
-                description,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.lato(
-                  color: Colors.grey[800],
-                  fontSize: 14.0,
-                  letterSpacing: 1.0,
-                  fontWeight: FontWeight.w400,
+                SizedBox(
+                  height: 5.0,
                 ),
-              )
-            ],
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    color: primaryColor,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
+                Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    color: Colors.grey[800],
+                    fontSize: 14.0,
+                    letterSpacing: 1.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

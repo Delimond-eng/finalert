@@ -7,8 +7,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 class AnnounceCard extends StatelessWidget {
+  final Function onLiked, onCommented, onViewMore;
+
   const AnnounceCard({
     Key key,
+    this.onCommented,
+    this.onLiked,
+    this.onViewMore,
   }) : super(key: key);
 
   @override
@@ -96,16 +101,16 @@ class AnnounceCard extends StatelessWidget {
                                     CustomIconRoundedBtn(
                                       color: accentColor,
                                       icon: CupertinoIcons.heart,
-                                      onPressed: () {},
+                                      onPressed: onLiked,
                                     ),
                                     const SizedBox(
                                       width: 8.0,
                                     ),
                                     CustomIconRoundedBtn(
                                       color: primaryColor,
-                                      icon: CupertinoIcons.conversation_bubble,
+                                      icon: CupertinoIcons.chat_bubble_text,
                                       isActived: true,
-                                      onPressed: () {},
+                                      onPressed: onCommented,
                                     ),
                                   ],
                                 ),
@@ -131,17 +136,7 @@ class AnnounceCard extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(30.0),
                                     color: Colors.transparent,
                                     child: InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          PageTransition(
-                                            child: SingleAnnouncingViewPage(),
-                                            type: PageTransitionType
-                                                .rightToLeftWithFade,
-                                            fullscreenDialog: true,
-                                          ),
-                                        );
-                                      },
+                                      onTap: onViewMore,
                                       borderRadius: BorderRadius.circular(30.0),
                                       child: const Center(
                                         child: Icon(

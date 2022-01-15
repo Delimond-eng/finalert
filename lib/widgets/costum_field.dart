@@ -2,19 +2,17 @@ import 'package:finalert/global/style.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CostumFormTextField extends StatelessWidget {
+class CostumTextField extends StatelessWidget {
   final IconData icon;
   final String hintText;
-  final String errorText;
   final String expandedLabel;
   final TextEditingController controller;
   final int maxLength;
   final bool readOnly;
   final TextInputType inputType;
-  const CostumFormTextField({
+  const CostumTextField({
     this.icon,
     this.hintText,
-    this.errorText,
     this.expandedLabel,
     this.controller,
     this.maxLength,
@@ -24,14 +22,7 @@ class CostumFormTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return errorText;
-        } else {
-          return null;
-        }
-      },
+    return TextField(
       controller: controller,
       readOnly: readOnly,
       keyboardType: inputType ?? TextInputType.text,
@@ -39,10 +30,6 @@ class CostumFormTextField extends StatelessWidget {
         hintMaxLines: maxLength,
         labelText: expandedLabel,
         hintText: '$hintText...',
-        errorStyle: GoogleFonts.lato(
-          color: Colors.red,
-          fontSize: 12.0,
-        ),
         hintStyle: GoogleFonts.lato(
           color: Colors.grey[500],
         ),
@@ -61,13 +48,6 @@ class CostumFormTextField extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: primaryColor,
-            width: 1.0,
-          ),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Colors.red,
             width: 1.0,
           ),
           borderRadius: BorderRadius.circular(5.0),

@@ -458,7 +458,7 @@ class XDialog {
 
 class Modal {
   static void show(context,
-      {String title, Widget modalContent, double height}) {
+      {String title, Widget modalContent, double height, Color color}) {
     showDialog(
       barrierDismissible: false,
       barrierColor: Colors.black38,
@@ -494,7 +494,7 @@ class Modal {
                             height: 50,
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
-                              color: accentColor,
+                              color: color ?? accentColor,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

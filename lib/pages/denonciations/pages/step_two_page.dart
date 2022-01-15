@@ -4,30 +4,23 @@ import 'package:finalert/global/style.dart';
 import 'package:finalert/widgets/costum_field.dart';
 import 'package:finalert/widgets/custom_check_box.dart';
 import 'package:finalert/widgets/custom_dropdown.dart';
+import 'package:finalert/widgets/custom_form_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
 
-import 'pages/step_two_page.dart';
-
-class IdentityAnonymousPage extends StatefulWidget {
+class SecondStepPage extends StatefulWidget {
   final bool hasAnonymous;
-  IdentityAnonymousPage({Key key, this.hasAnonymous = false}) : super(key: key);
+  SecondStepPage({Key key, this.hasAnonymous = false}) : super(key: key);
 
   @override
-  _IdentityAnonymousPageState createState() => _IdentityAnonymousPageState();
+  _SecondStepPageState createState() => _SecondStepPageState();
 }
 
-class _IdentityAnonymousPageState extends State<IdentityAnonymousPage> {
-  String selectedRegion;
-  bool hasRegionError = false;
-  String selectedCity;
-  bool hasCityError = false;
-
+class _SecondStepPageState extends State<SecondStepPage> {
   bool isMr = false;
   bool isMme = false;
-  bool isPerson = false;
+
   String selectedCategoryUser = "";
 
   @override
@@ -46,7 +39,7 @@ class _IdentityAnonymousPageState extends State<IdentityAnonymousPage> {
               ),
             ),
             Text(
-              "Etape 1/2",
+              "Etape 2/2",
               style: GoogleFonts.lato(
                 fontSize: 16.0,
                 color: secondaryColor,
@@ -80,7 +73,7 @@ class _IdentityAnonymousPageState extends State<IdentityAnonymousPage> {
                           ),
                           child: Center(
                             child: Text(
-                              "Informations sur le plaignant",
+                              "Informations sur l'accusé",
                               style: GoogleFonts.lato(
                                 color: Colors.white,
                                 fontSize: 15.0,
@@ -96,100 +89,114 @@ class _IdentityAnonymousPageState extends State<IdentityAnonymousPage> {
                   const SizedBox(
                     height: 20.0,
                   ),
-                  const CostumTextField(
-                    hintText: "Entrez le nom complet...",
-                    expandedLabel: "Nom complet du plaignant",
-                    icon: Icons.assignment_ind_outlined,
+                  const CostumFormTextField(
+                    hintText: "Entrez le nom complet de l'accusé...",
+                    expandedLabel: "Nom complet de l'accusé  ",
+                    errorText: "nom de l'accusé réquis !",
+                    icon: Icons.assignment_ind_rounded,
                   ),
                   const SizedBox(
                     height: 10.0,
                   ),
                   const CostumTextField(
-                    hintText: "Entrez le télephone du plaignant",
+                    hintText: "Entrez le télephone de l'accusé",
                     inputType: TextInputType.phone,
-                    expandedLabel: "Téléphone du plaignant",
+                    expandedLabel: "Téléphone de l'accusé",
                     icon: CupertinoIcons.phone,
                     maxLength: 10,
                   ),
                   const SizedBox(
                     height: 10.0,
                   ),
+                  const Text("Genre de l'accusé"),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Container(
+                          child: CostumChexkBox(
+                            hasColored: false,
+                            fontSize: 15.0,
+                            onChanged: () {
+                              setState(() {
+                                isMr = !isMr;
+                                isMme = false;
+
+                                if (isMr) {
+                                  selectedCategoryUser = "Masculin";
+                                }
+                              });
+                            },
+                            title: "Masculin",
+                            value: isMr,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Flexible(
+                        child: Container(
+                          child: CostumChexkBox(
+                            hasColored: false,
+                            fontSize: 15.0,
+                            onChanged: () {
+                              setState(() {
+                                isMme = !isMme;
+                                isMr = false;
+                                if (isMme) {
+                                  selectedCategoryUser = "Féminin";
+                                }
+                              });
+                            },
+                            title: "Féminin",
+                            value: isMme,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
                   const CostumTextField(
-                    hintText: "Entrez l'email du plaignant...",
-                    inputType: TextInputType.emailAddress,
-                    expandedLabel: "Email du plaignant",
-                    icon: CupertinoIcons.envelope,
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  CostumDropdown(
-                    array: ["province 1", "province 2"],
-                    errorText: "province du plaignant réquise !",
-                    hintText: "Entrez la province du plaignant",
-                    isError: hasRegionError,
-                    onChanged: (value) {},
-                    value: selectedRegion,
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  CostumDropdown(
-                    array: ["ville", "ville2"],
-                    isError: hasCityError,
-                    errorText: "ville du plaignant réquise !",
-                    hintText: "Entrez la ville du plaignant",
-                    onChanged: (value) {},
-                    value: selectedCity,
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  const CostumTextField(
-                    hintText: "Entrez l'adresse...",
+                    hintText: "Entrez la fonction de l'accusé...",
                     expandedLabel: "Adresse plaignant",
-                    inputType: TextInputType.streetAddress,
+                    inputType: TextInputType.text,
                     icon: CupertinoIcons.location_solid,
                   ),
                   const SizedBox(
                     height: 10.0,
+                  ),
+                  const CostumFormTextField(
+                    hintText: "Entrez votre plainte...",
+                    expandedLabel: "Plainte",
+                    errorText: "plainte requise !",
+                    inputType: TextInputType.multiline,
+                    icon: CupertinoIcons.bubble_middle_bottom,
+                  ),
+                  const SizedBox(
+                    height: 20.0,
                   ),
                   Container(
                     height: 60.0,
                     width: double.infinity,
                     child: RaisedButton.icon(
                       elevation: 10.0,
-                      color: primaryColor,
+                      color: Colors.green[700],
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0),
                       ),
-                      icon: const Icon(Icons.keyboard_arrow_right,
-                          color: Colors.white),
+                      icon: const Icon(Icons.check, color: Colors.white),
                       label: Text(
-                        "Suivant",
+                        "Dénoncer",
                         style: GoogleFonts.lato(color: Colors.white),
                       ),
-                      onPressed: () {
-                        /*if (selectedRegion == null) {
-                          setState(() {
-                            hasRegionError = !hasRegionError;
-                          });
-                        }
-                        if (selectedCity == null) {
-                          setState(() {
-                            hasCityError = !hasCityError;
-                          });
-                        }*/
-
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            fullscreenDialog: true,
-                            type: PageTransitionType.rightToLeftWithFade,
-                            child: SecondStepPage(),
-                          ),
-                        );
-                      },
+                      onPressed: () {},
                     ),
                   )
                 ],
