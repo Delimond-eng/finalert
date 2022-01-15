@@ -1,209 +1,464 @@
-// ignore_for_file: deprecated_member_use
+import 'dart:convert';
+import 'dart:io';
 
+import 'package:finalert/constants/controllers.dart';
+import 'package:finalert/global/global.dart';
 import 'package:finalert/global/style.dart';
+import 'package:finalert/models/entity_models.dart';
+import 'package:finalert/models/provinces_models.dart';
+import 'package:finalert/models/territoires_models.dart';
+import 'package:finalert/models/type_plainte_models.dart';
+import 'package:finalert/pages/denonciations/identiy_anonymous_page.dart';
 import 'package:finalert/widgets/costum_field.dart';
 import 'package:finalert/widgets/custom_check_box.dart';
 import 'package:finalert/widgets/custom_dropdown.dart';
-import 'package:finalert/widgets/custom_form_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
-class SecondStepPage extends StatefulWidget {
-  final bool hasAnonymous;
-  SecondStepPage({Key key, this.hasAnonymous = false}) : super(key: key);
+class StepTwoPage extends StatefulWidget {
+  StepTwoPage({Key key}) : super(key: key);
 
   @override
-  _SecondStepPageState createState() => _SecondStepPageState();
+  _StepTwoPageState createState() => _StepTwoPageState();
 }
 
-class _SecondStepPageState extends State<SecondStepPage> {
-  bool isMr = false;
-  bool isMme = false;
+class _StepTwoPageState extends State<StepTwoPage> {
+  bool isPreuve = false;
+  bool isNotPreuve = true;
 
-  String selectedCategoryUser = "";
+  Provinces selectedRegion;
+  bool hasRegionError = false;
+  Territoires selectedCity;
+  bool hasCityError = false;
+  Entites selectedEntity;
+  bool hasEntityError = false;
+  TypePlaintes selectedMotif;
+  bool hasMotifError = false;
 
+  bool hasFile1 = false;
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: accentSchemeColor,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Plainte dénonciation".toUpperCase(),
-              style: GoogleFonts.lato(
-                fontSize: 14.0,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            Text(
-              "Etape 2/2",
-              style: GoogleFonts.lato(
-                fontSize: 16.0,
-                color: secondaryColor,
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: SafeArea(
-        child: Container(
-          child: Form(
-            child: SingleChildScrollView(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        child: Container(
-                          padding: const EdgeInsets.all(15.0),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                accentSchemeColor,
-                                primaryColor,
-                              ],
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Informations sur l'accusé",
-                              style: GoogleFonts.lato(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 1.0,
-                              ),
-                            ),
-                          ),
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          //entité dropdown
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                height: 60.0,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: hasEntityError ? Colors.red : primaryColor,
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: DropdownButton(
+                    underline: const SizedBox(),
+                    menuMaxHeight: 400,
+                    dropdownColor: Colors.white,
+                    alignment: Alignment.centerRight,
+                    style: GoogleFonts.lato(color: Colors.black),
+                    value: selectedEntity,
+                    hint: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Sélectionnez l'entité de l'accusé",
+                        style: GoogleFonts.mulish(
+                          color: Colors.grey[600],
+                          fontSize: 14.0,
+                          fontStyle: FontStyle.italic,
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  const CostumFormTextField(
-                    hintText: "Entrez le nom complet de l'accusé...",
-                    expandedLabel: "Nom complet de l'accusé  ",
-                    errorText: "nom de l'accusé réquis !",
-                    icon: Icons.assignment_ind_rounded,
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  const CostumTextField(
-                    hintText: "Entrez le télephone de l'accusé",
-                    inputType: TextInputType.phone,
-                    expandedLabel: "Téléphone de l'accusé",
-                    icon: CupertinoIcons.phone,
-                    maxLength: 10,
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  const Text("Genre de l'accusé"),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Flexible(
-                        child: Container(
-                          child: CostumChexkBox(
-                            hasColored: false,
-                            fontSize: 15.0,
-                            onChanged: () {
-                              setState(() {
-                                isMr = !isMr;
-                                isMme = false;
-
-                                if (isMr) {
-                                  selectedCategoryUser = "Masculin";
-                                }
-                              });
-                            },
-                            title: "Masculin",
-                            value: isMr,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Flexible(
-                        child: Container(
-                          child: CostumChexkBox(
-                            hasColored: false,
-                            fontSize: 15.0,
-                            onChanged: () {
-                              setState(() {
-                                isMme = !isMme;
-                                isMr = false;
-                                if (isMme) {
-                                  selectedCategoryUser = "Féminin";
-                                }
-                              });
-                            },
-                            title: "Féminin",
-                            value: isMme,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  const CostumTextField(
-                    hintText: "Entrez la fonction de l'accusé...",
-                    expandedLabel: "Adresse plaignant",
-                    inputType: TextInputType.text,
-                    icon: CupertinoIcons.location_solid,
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  const CostumFormTextField(
-                    hintText: "Entrez votre plainte...",
-                    expandedLabel: "Plainte",
-                    errorText: "plainte requise !",
-                    inputType: TextInputType.multiline,
-                    icon: CupertinoIcons.bubble_middle_bottom,
-                  ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  Container(
-                    height: 60.0,
-                    width: double.infinity,
-                    child: RaisedButton.icon(
-                      elevation: 10.0,
-                      color: Colors.green[700],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      icon: const Icon(Icons.check, color: Colors.white),
-                      label: Text(
-                        "Dénoncer",
-                        style: GoogleFonts.lato(color: Colors.white),
-                      ),
-                      onPressed: () {},
                     ),
-                  )
+                    isExpanded: true,
+                    items: homeController.entites.map((e) {
+                      return DropdownMenuItem(
+                        value: e,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            e.nomEntite,
+                            style: GoogleFonts.lato(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12.0,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedEntity = value;
+                      });
+                      print(selectedEntity.id);
+                    },
+                  ),
+                ),
+              ),
+              if (hasEntityError)
+                const SizedBox(
+                  height: 5.0,
+                ),
+              if (hasRegionError)
+                Text(
+                  "l'entité de l'accusé est réquise !",
+                  style: GoogleFonts.lato(color: Colors.red, fontSize: 12.0),
+                )
+            ],
+          ),
+          const SizedBox(
+            height: 10.0,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                height: 60.0,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: hasEntityError ? Colors.red : primaryColor,
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: DropdownButton(
+                    underline: const SizedBox(),
+                    menuMaxHeight: 400,
+                    dropdownColor: Colors.white,
+                    alignment: Alignment.centerRight,
+                    style: GoogleFonts.lato(color: Colors.black),
+                    value: selectedMotif,
+                    hint: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Sélectionnez le motif de la plainte",
+                        style: GoogleFonts.mulish(
+                          color: Colors.grey[600],
+                          fontSize: 14.0,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                    isExpanded: true,
+                    items: homeController.typePlaintes.map((e) {
+                      return DropdownMenuItem(
+                        value: e,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            e.libelleTypePlainte,
+                            style: GoogleFonts.lato(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12.0,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedMotif = value;
+                      });
+                      print(selectedMotif.id);
+                    },
+                  ),
+                ),
+              ),
+              if (hasEntityError)
+                const SizedBox(
+                  height: 5.0,
+                ),
+              if (hasRegionError)
+                Text(
+                  "le motif de la plainte est réquis !",
+                  style: GoogleFonts.lato(color: Colors.red, fontSize: 12.0),
+                )
+            ],
+          ),
+          const SizedBox(
+            height: 10.0,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                height: 60.0,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: hasRegionError ? Colors.red : primaryColor,
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: DropdownButton(
+                    underline: const SizedBox(),
+                    menuMaxHeight: 400,
+                    dropdownColor: Colors.white,
+                    alignment: Alignment.centerRight,
+                    style: GoogleFonts.lato(color: Colors.black),
+                    value: selectedRegion,
+                    hint: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Province du plaignant",
+                        style: GoogleFonts.mulish(
+                          color: Colors.grey[600],
+                          fontSize: 14.0,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                    isExpanded: true,
+                    items: homeController.provinces.map((e) {
+                      return DropdownMenuItem(
+                        value: e,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            e.libelleVille,
+                            style: GoogleFonts.lato(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedCity = value;
+                      });
+                      print(selectedCity.id);
+                    },
+                  ),
+                ),
+              ),
+              if (hasCityError)
+                SizedBox(
+                  height: 5.0,
+                ),
+              if (hasCityError)
+                Text(
+                  "Province du plaignant réquise !",
+                  style: GoogleFonts.lato(color: Colors.red, fontSize: 12.0),
+                )
+            ],
+          ),
+          const SizedBox(
+            height: 10.0,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                height: 60.0,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: hasCityError ? Colors.red : primaryColor,
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: DropdownButton(
+                    underline: const SizedBox(),
+                    menuMaxHeight: 400,
+                    dropdownColor: Colors.white,
+                    alignment: Alignment.centerRight,
+                    style: GoogleFonts.lato(color: Colors.black),
+                    value: selectedCity,
+                    hint: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Localisation de l'accusé",
+                        style: GoogleFonts.mulish(
+                          color: Colors.grey[600],
+                          fontSize: 14.0,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                    isExpanded: true,
+                    items: homeController.territoires.map((e) {
+                      return DropdownMenuItem(
+                        value: e,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            e.libelleTerritoire,
+                            style: GoogleFonts.lato(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedCity = value;
+                      });
+                      print(selectedCity.id);
+                    },
+                  ),
+                ),
+              ),
+              if (hasCityError)
+                SizedBox(
+                  height: 5.0,
+                ),
+              if (hasCityError)
+                Text(
+                  "Localisation de l'accusé réquise !",
+                  style: GoogleFonts.lato(color: Colors.red, fontSize: 12.0),
+                )
+            ],
+          ),
+
+          const SizedBox(
+            height: 10.0,
+          ),
+          const CostumTextField(
+            hintText: "Entrez le service d'attache de l'accusé",
+            inputType: TextInputType.text,
+            expandedLabel: "Service d'attache",
+            icon: CupertinoIcons.pencil,
+          ),
+          const SizedBox(
+            height: 10.0,
+          ),
+          const CostumTextField(
+            hintText: "Entrez le nom de l'accusé...",
+            expandedLabel: "Nom complet de l'accusé",
+            inputType: TextInputType.text,
+            icon: CupertinoIcons.person_fill,
+          ),
+          const SizedBox(
+            height: 10.0,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Flexible(
+                child: CostumChexkBox(
+                  hasColored: false,
+                  fontSize: 15.0,
+                  onChanged: () {
+                    setState(() {
+                      isPreuve = false;
+                      isNotPreuve = true;
+                    });
+                  },
+                  title: "Sans preuve",
+                  value: isNotPreuve,
+                ),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Flexible(
+                child: CostumChexkBox(
+                  hasColored: false,
+                  fontSize: 15.0,
+                  onChanged: () {
+                    setState(() {
+                      isPreuve = true;
+                      isNotPreuve = false;
+                    });
+                  },
+                  title: "Avec preuve",
+                  value: isPreuve,
+                ),
+              ),
+            ],
+          ),
+          if (isPreuve) ...[
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AttachmentBtn(
+                    title: "Image",
+                    hasFile: hasFile1,
+                    onPressed: () async {
+                      var picked = await takePhoto(source: ImageSource.gallery);
+                      var imageBytes = File(picked.path).readAsBytesSync();
+                      var strImage = base64Encode(imageBytes);
+                      print(strImage);
+                      if (picked != null) {
+                        setState(() {
+                          hasFile1 = true;
+                        });
+                      }
+                    },
+                  ),
+                  AttachmentBtn(
+                    title: "Document",
+                    onPressed: () {},
+                  ),
+                  AttachmentBtn(
+                    title: "Audio",
+                    onPressed: () {},
+                  ),
                 ],
               ),
             ),
+          ],
+          const SizedBox(
+            height: 10.0,
           ),
-        ),
+          Container(
+            height: 60.0,
+            width: double.infinity,
+            child: RaisedButton.icon(
+              elevation: 10.0,
+              color: Colors.green[700],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              icon: const Icon(Icons.check, color: Colors.white),
+              label: Text(
+                "Dénoncer",
+                style: GoogleFonts.lato(color: Colors.white),
+              ),
+              onPressed: () {},
+            ),
+          )
+        ],
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CostumDropdown extends StatefulWidget {
   final String hintText;
+  final double hintTextSize;
   final String errorText;
   final List<dynamic> array;
   final dynamic value;
@@ -16,6 +17,7 @@ class CostumDropdown extends StatefulWidget {
     this.value,
     this.isError = false,
     this.errorText,
+    this.hintTextSize,
   });
 
   @override
@@ -55,9 +57,10 @@ class _CostumDropdownState extends State<CostumDropdown> {
                 child: Text(
                   widget.hintText,
                   style: GoogleFonts.mulish(
-                      color: Colors.grey[600],
-                      fontSize: 14.0,
-                      fontStyle: FontStyle.italic),
+                    color: Colors.grey[600],
+                    fontSize: widget.hintTextSize ?? 14.0,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               ),
               isExpanded: true,

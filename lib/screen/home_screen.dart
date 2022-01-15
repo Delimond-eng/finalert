@@ -2,8 +2,12 @@
 
 import 'package:finalert/global/dialog.dart';
 import 'package:finalert/global/style.dart';
+import 'package:finalert/models/provinces_models.dart';
+import 'package:finalert/models/territoires_models.dart';
 import 'package:finalert/pages/announces/announcing_page.dart';
 import 'package:finalert/pages/denonciations/identiy_anonymous_page.dart';
+import 'package:finalert/pages/suivis/suivi_plainte_page.dart';
+import 'package:finalert/services/api_manager.dart';
 import 'package:finalert/widgets/custom_check_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +89,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         icon: "assets/icons/marketing-research-svgrepo-com.svg",
                         title: "Suivi plainte",
                         description: "Suivez le statut de votre plainte",
-                        onPressed: () {},
+                        onPressed: () async {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              child: SuiviPage(),
+                              type: PageTransitionType.leftToRightWithFade,
+                            ),
+                          );
+                        },
                       ),
                       HomeMenuBtn(
                         icon: "assets/icons/information-point-svgrepo-com.svg",
@@ -135,24 +147,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: "Dénonciation Anonyme",
                       value: hasAnonymous,
                       onChanged: () {
-                        setter(() {
-                          hasIdentity = false;
-                          hasAnonymous = true;
-                        });
-                        if (hasAnonymous) {
-                          Get.back();
-                          setter(() {
-                            hasAnonymous = false;
-                            hasIdentity = false;
-                          });
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              child: IdentityAnonymousPage(),
-                              type: PageTransitionType.leftToRightWithFade,
+                        Get.back();
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            child: IdentityAnonymousPage(
+                              hasAnonymous: false,
                             ),
-                          );
-                        }
+                            type: PageTransitionType.leftToRightWithFade,
+                          ),
+                        );
                       },
                     ),
                     const SizedBox(
@@ -164,24 +168,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: "Dénonciation avec identité",
                       value: hasIdentity,
                       onChanged: () {
-                        setter(() {
-                          hasAnonymous = false;
-                          hasIdentity = true;
-                        });
-                        if (hasIdentity) {
-                          Get.back();
-                          setter(() {
-                            hasAnonymous = false;
-                            hasIdentity = false;
-                          });
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              child: IdentityAnonymousPage(),
-                              type: PageTransitionType.leftToRightWithFade,
+                        Get.back();
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            child: IdentityAnonymousPage(
+                              hasAnonymous: true,
                             ),
-                          );
-                        }
+                            type: PageTransitionType.leftToRightWithFade,
+                          ),
+                        );
                       },
                     ),
                     // ignore: sized_box_for_whitespace
@@ -334,7 +330,7 @@ class HomeMenuBtn extends StatelessWidget {
                   icon,
                   height: 50.0,
                   width: 50.0,
-                  color: accentColor,
+                  color: primaryColor,
                 ),
                 SizedBox(
                   height: 5.0,

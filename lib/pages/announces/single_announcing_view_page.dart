@@ -1,13 +1,12 @@
-import 'package:finalert/global/dialog.dart';
 import 'package:finalert/global/style.dart';
-import 'package:finalert/widgets/comment_area_widget.dart';
-import 'package:finalert/widgets/custom_form_field.dart';
+import 'package:finalert/models/annonce_models.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SingleAnnouncingViewPage extends StatefulWidget {
-  SingleAnnouncingViewPage({Key key}) : super(key: key);
+  final Annonces data;
+  SingleAnnouncingViewPage({Key key, this.data}) : super(key: key);
 
   @override
   _SingleAnnouncingViewPageState createState() =>
@@ -21,7 +20,7 @@ class _SingleAnnouncingViewPageState extends State<SingleAnnouncingViewPage> {
       appBar: AppBar(
         backgroundColor: accentSchemeColor,
         title: Text(
-          "Announce title",
+          widget.data.titreAnnonce,
           style: GoogleFonts.lato(
             fontSize: 18.0,
             fontWeight: FontWeight.w800,
@@ -43,8 +42,9 @@ class _SingleAnnouncingViewPageState extends State<SingleAnnouncingViewPage> {
                             width: double.infinity,
                             height: 200.0,
                             decoration: const BoxDecoration(
+                              color: Colors.white,
                               image: DecorationImage(
-                                image: AssetImage("assets/images/shape5.jpg"),
+                                image: AssetImage("assets/images/logo.png"),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -54,8 +54,8 @@ class _SingleAnnouncingViewPageState extends State<SingleAnnouncingViewPage> {
                                   colors: [
                                     Colors.transparent,
                                     Colors.transparent,
-                                    Colors.transparent,
-                                    accentSchemeColor.withOpacity(.4),
+                                    accentSchemeColor.withOpacity(.2),
+                                    accentSchemeColor.withOpacity(.5),
                                     accentSchemeColor.withOpacity(.5),
                                   ],
                                   begin: Alignment.topCenter,
@@ -69,7 +69,7 @@ class _SingleAnnouncingViewPageState extends State<SingleAnnouncingViewPage> {
                             right: 10.0,
                             left: 10.0,
                             child: Text(
-                              "Our announce big title",
+                              widget.data.titreAnnonce,
                               style: GoogleFonts.lato(
                                 fontSize: 25.0,
                                 color: Colors.white,
@@ -131,11 +131,13 @@ class _SingleAnnouncingViewPageState extends State<SingleAnnouncingViewPage> {
                           vertical: 10.0,
                         ),
                         child: Text(
-                          "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
-                          "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+                          widget.data.contenuAnnonce,
                           textAlign: TextAlign.justify,
+                          softWrap: true,
                           style: GoogleFonts.lato(
                             color: Colors.grey[800],
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       )
@@ -144,9 +146,6 @@ class _SingleAnnouncingViewPageState extends State<SingleAnnouncingViewPage> {
                 ),
               ),
             ),
-            CommentArea(
-              onPressed: () {},
-            )
           ],
         ),
       ),

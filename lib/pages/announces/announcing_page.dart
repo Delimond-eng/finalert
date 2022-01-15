@@ -1,8 +1,10 @@
+import 'package:finalert/constants/controllers.dart';
 import 'package:finalert/global/style.dart';
 import 'package:finalert/widgets/announes_card.dart';
 import 'package:finalert/widgets/comment_area_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -32,43 +34,39 @@ class _AnnouncingPageState extends State<AnnouncingPage> {
         ),
       ),
       body: SafeArea(
-          child: Container(
-        child: Scrollbar(
-          interactive: true,
-          radius: const Radius.circular(10.0),
-          thickness: 5.0,
-          child: ListView.builder(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
-            itemCount: 10,
-            itemBuilder: (__, _) {
-              return AnnounceCard(
-                onCommented: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      child: SingleAnnouncingViewPage(),
-                      type: PageTransitionType.rightToLeftWithFade,
-                      fullscreenDialog: true,
-                    ),
+        child: Obx(() {
+          return Container(
+            child: Scrollbar(
+              interactive: true,
+              radius: const Radius.circular(10.0),
+              thickness: 5.0,
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 15.0, vertical: 15.0),
+                itemCount: homeController.annonces.length,
+                itemBuilder: (context, index) {
+                  var data = homeController.annonces[index];
+                  return AnnounceCard(
+                    data: data,
+                    onViewMore: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          child: SingleAnnouncingViewPage(
+                            data: data,
+                          ),
+                          type: PageTransitionType.rightToLeftWithFade,
+                          fullscreenDialog: true,
+                        ),
+                      );
+                    },
                   );
                 },
-                onLiked: () {},
-                onViewMore: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      child: SingleAnnouncingViewPage(),
-                      type: PageTransitionType.rightToLeftWithFade,
-                      fullscreenDialog: true,
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-        ),
-      )),
+              ),
+            ),
+          );
+        }),
+      ),
     );
   }
 }
