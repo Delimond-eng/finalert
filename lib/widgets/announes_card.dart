@@ -177,8 +177,8 @@ class AnnounceCard extends StatelessWidget {
               ],
               gradient: LinearGradient(
                 colors: [
-                  primaryColor,
-                  accentSchemeColor,
+                  accentColor,
+                  Colors.redAccent,
                 ],
               ),
             ),

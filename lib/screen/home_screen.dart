@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "Sélectionnez le type de dénonciation !",
                       style: GoogleFonts.lato(
                         fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     const SizedBox(
