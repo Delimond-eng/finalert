@@ -29,6 +29,8 @@ class _SuiviPageState extends State<SuiviPage> {
       ),
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               margin:

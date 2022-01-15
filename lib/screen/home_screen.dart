@@ -2,12 +2,10 @@
 
 import 'package:finalert/global/dialog.dart';
 import 'package:finalert/global/style.dart';
-import 'package:finalert/models/provinces_models.dart';
-import 'package:finalert/models/territoires_models.dart';
 import 'package:finalert/pages/announces/announcing_page.dart';
 import 'package:finalert/pages/denonciations/identiy_anonymous_page.dart';
+import 'package:finalert/pages/helps/help_page.dart';
 import 'package:finalert/pages/suivis/suivi_plainte_page.dart';
-import 'package:finalert/services/api_manager.dart';
 import 'package:finalert/widgets/custom_check_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +102,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: "Aide",
                         description:
                             "Découvrez comment denoncer de tracasseries ",
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              child: HelpPage(),
+                              type: PageTransitionType.leftToRightWithFade,
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
