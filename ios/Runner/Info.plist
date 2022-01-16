@@ -42,10 +42,8 @@
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
 		<key>NSAppTransportSecurity</key>
-		<dict>
-			<key>NSAllowsArbitraryLoads</key>
-			<true/>
-		</dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
         <key>LSApplicationQueriesSchemes</key>
@@ -53,5 +51,8 @@
             <string>https</string>
             <string>http</string>
         </array>
+		<key>NSAppTransportSecurity</key>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
 	</dict>
 </plist>

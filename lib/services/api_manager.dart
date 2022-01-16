@@ -29,7 +29,7 @@ class ApiManager {
       ...infosPlaignant.toMap(),
       ...infosAccuse.toMap(),
     };
-    print(maps);
+    print(infosPlaignant.territoirePlaignantId);
     var result;
     try {
       result = await ApiService.request(

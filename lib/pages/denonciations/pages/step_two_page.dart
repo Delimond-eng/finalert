@@ -529,7 +529,7 @@ class _StepTwoPageState extends State<StepTwoPage> {
                       infosPlaignant: homeController.plaignantInfos.value)
                   .then((res) {
                 Xloading.dismiss();
-                print(res);
+                //print(res);
               });
             },
           ),

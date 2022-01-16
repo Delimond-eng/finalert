@@ -29,12 +29,8 @@ class ApiService {
           headers: headers,
         );
         break;
-      default:
-        response = await http.get(
-          Uri.parse('${ApiService.baseUrl}/$url'),
-          headers: headers,
-        );
     }
+    //print(response.body);
     if (response.statusCode == 200) {
       return response.body;
     } else {
