@@ -25,6 +25,7 @@ dependencies:
   percent_indicator: "^2.1.7+2"
   image_picker: any
   url_launcher: ^6.0.18
+  dio: ^4.0.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

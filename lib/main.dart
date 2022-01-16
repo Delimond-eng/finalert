@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -7,11 +8,11 @@ import 'controllers/home_controller.dart';
 import 'screen/home_screen.dart';
 
 void main() async {
-  /*SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);*/
   await GetStorage.init();
   Get.put(HomeController());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(const MyApp());
 }
 

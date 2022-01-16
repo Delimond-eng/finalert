@@ -25,35 +25,39 @@ class HomeController extends GetxController {
   }
 
   Future<void> loadDatas() async {
-    await ApiManager.view("tonocfapi/api/requestplaintes/GetProvinces")
-        .then((res) {
-      res.forEach((e) {
-        provinces.add(Provinces.fromJson(e));
+    try {
+      await ApiManager.view("tonocfapi/api/requestplaintes/GetProvinces")
+          .then((res) {
+        res.forEach((e) {
+          provinces.add(Provinces.fromJson(e));
+        });
       });
-    });
-    await ApiManager.view("tonocfapi/api/requestplaintes/GetTerritoires")
-        .then((res) {
-      res.forEach((e) {
-        territoires.add(Territoires.fromJson(e));
+      await ApiManager.view("tonocfapi/api/requestplaintes/GetTerritoires")
+          .then((res) {
+        res.forEach((e) {
+          territoires.add(Territoires.fromJson(e));
+        });
       });
-    });
-    await ApiManager.view("tonocfapi/api/requestplaintes/GetEntites")
-        .then((res) {
-      res.forEach((e) {
-        entites.add(Entites.fromJson(e));
+      await ApiManager.view("tonocfapi/api/requestplaintes/GetEntites")
+          .then((res) {
+        res.forEach((e) {
+          entites.add(Entites.fromJson(e));
+        });
       });
-    });
-    await ApiManager.view("tonocfapi/api/requestplaintes/GetTypePlainte")
-        .then((res) {
-      res.forEach((e) {
-        typePlaintes.add(TypePlaintes.fromJson(e));
+      await ApiManager.view("tonocfapi/api/requestplaintes/GetTypePlainte")
+          .then((res) {
+        res.forEach((e) {
+          typePlaintes.add(TypePlaintes.fromJson(e));
+        });
       });
-    });
-    await ApiManager.view("tonocfapi/api/requestplaintes/GetAnnonces")
-        .then((res) {
-      res.forEach((e) {
-        annonces.add(Annonces.fromJson(e));
+      await ApiManager.view("tonocfapi/api/requestplaintes/GetAnnonces")
+          .then((res) {
+        res.forEach((e) {
+          annonces.add(Annonces.fromJson(e));
+        });
       });
-    });
+    } on Exception catch (e) {
+      print(e);
+    }
   }
 }

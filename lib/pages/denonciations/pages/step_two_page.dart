@@ -290,6 +290,7 @@ class _StepTwoPageState extends State<StepTwoPage> {
                         }
                       });
                     });
+                    print(selectedRegion.id);
                   },
                 ),
               ),
@@ -332,7 +333,7 @@ class _StepTwoPageState extends State<StepTwoPage> {
                   dropdownColor: Colors.white,
                   alignment: Alignment.centerRight,
                   style: GoogleFonts.lato(color: Colors.black),
-                  value: selectedCity,
+                  value: selectedCity ?? territoires[0],
                   hint: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
