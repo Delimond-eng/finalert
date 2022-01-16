@@ -62,6 +62,10 @@ class PlaintePlaignant {
       data["PhoneId"] = phonePlaignantId;
     }
 
+    if(adressePlaignant != null){
+      data["Adresse"] = adressePlaignant;
+    }
+
     return data;
   }
 }
@@ -112,6 +116,10 @@ class PlainteAccuse {
 
     if (motifAccuse != null) {
       data["MotifPlainte"] = motifAccuse;
+    }
+
+    if(typePreuve != null){
+      data["TypeContenu"] = typePreuve;
     }
 
     return data;

@@ -3,6 +3,7 @@
 import 'package:finalert/global/dialog.dart';
 import 'package:finalert/global/style.dart';
 import 'package:finalert/services/api_manager.dart';
+import 'package:finalert/services/api_service.dart';
 import 'package:finalert/widgets/custom_form_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,12 +42,13 @@ class _SuiviPageState extends State<SuiviPage> {
               Container(
                 margin: const EdgeInsets.symmetric(
                     horizontal: 10.0, vertical: 10.0),
-                child: const CostumFormTextField(
+                child: CostumFormTextField(
                   hintText: "Entrez la référence plainte...",
                   errorText: "veuillez entrer la référence plainte !",
                   inputType: TextInputType.text,
                   expandedLabel: "Recherche",
                   icon: CupertinoIcons.search,
+                  controller: controller,
                 ),
               ),
               Container(
@@ -68,10 +70,17 @@ class _SuiviPageState extends State<SuiviPage> {
                     if (_formKey.currentState.validate()) {
                       Xloading.showLoading(context);
                       await ApiManager.view(
-                              "tonocfapi/api/requestplaintes/GetStatusPlainte?id=${controller.text}")
+                              "/tonocfapi/api/requestplaintes/GetStatusPlainte?id=${controller.text}")
                           .then((res) {
                         Xloading.dismiss();
-                        print(res);
+                        if(res !=null){
+                          XDialog.showConfirmation(
+                             context: context,
+                            title: "Status plainte",
+                            icon: CupertinoIcons.info_circle_fill,
+                            content: res[0]["StatutPlainte"] ?? "hhdsdhshdhjs",
+                          );
+                        }
                       });
                     }
                   },

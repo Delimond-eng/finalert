@@ -231,7 +231,7 @@ class XDialog {
           Text("$title", style: GoogleFonts.lato(fontSize: 14))
         ],
       ),
-      content: Text("$content"),
+      content: Text("$content", textAlign: TextAlign.center,),
       actions: [
         cancelButton,
       ],
@@ -458,7 +458,7 @@ class XDialog {
 
 class Modal {
   static void show(context,
-      {String title, Widget modalContent, double height, Color color}) {
+      {String title, Widget modalContent, double height, Color color, bool hasMessage=false}) {
     showDialog(
       barrierDismissible: false,
       barrierColor: Colors.black38,

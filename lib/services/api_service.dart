@@ -17,10 +17,8 @@ class ApiService {
     switch (method) {
       case "post":
         response = await http.post(
-          Uri.parse('${ApiService.baseUrl}/$url'),
-          headers: {"Content-Type": "application/x-www-form-urlencoded"},
+          Uri.parse(url),
           body: jsonEncode(body),
-          encoding: Encoding.getByName("utf-8"),
         );
         break;
       case "get":
@@ -36,7 +34,7 @@ class ApiService {
         );
         break;
     }
-    print(body);
+    //print(response.body);
     if (response.statusCode == 200) {
       return response.body;
     } else {
