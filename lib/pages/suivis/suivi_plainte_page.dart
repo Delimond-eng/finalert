@@ -35,10 +35,10 @@ class _SuiviPageState extends State<SuiviPage> {
             Container(
               margin:
                   const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-              child: CostumFormTextField(
-                hintText: "Recherche...",
+              child: const CostumFormTextField(
+                hintText: "Entrez la référence de la plainte...",
                 errorText: "veuillez entrer quelque chose !",
-                inputType: TextInputType.phone,
+                inputType: TextInputType.text,
                 expandedLabel: "Recherche",
                 icon: CupertinoIcons.search,
               ),

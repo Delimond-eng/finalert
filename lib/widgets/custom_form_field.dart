@@ -11,6 +11,7 @@ class CostumFormTextField extends StatelessWidget {
   final int maxLength;
   final bool readOnly;
   final TextInputType inputType;
+
   const CostumFormTextField({
     this.icon,
     this.hintText,
@@ -35,6 +36,7 @@ class CostumFormTextField extends StatelessWidget {
       controller: controller,
       readOnly: readOnly,
       keyboardType: inputType ?? TextInputType.text,
+      maxLength: maxLength,
       decoration: InputDecoration(
         hintMaxLines: maxLength,
         labelText: expandedLabel,
@@ -43,9 +45,11 @@ class CostumFormTextField extends StatelessWidget {
           color: Colors.red,
           fontSize: 12.0,
         ),
+        counterText: '',
         hintStyle: GoogleFonts.lato(
           color: Colors.grey[500],
         ),
+        prefix: inputType == TextInputType.phone ? const Text("+243 ") : null,
         prefixIcon: Icon(
           icon,
           color: accentSchemeColor,

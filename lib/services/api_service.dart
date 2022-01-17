@@ -18,8 +18,9 @@ class ApiService {
       case "post":
         response = await http.post(
           Uri.parse('${ApiService.baseUrl}/$url'),
-          headers: headers,
+          headers: {"Content-Type": "application/x-www-form-urlencoded"},
           body: jsonEncode(body),
+          encoding: Encoding.getByName("utf-8"),
         );
         break;
       case "get":

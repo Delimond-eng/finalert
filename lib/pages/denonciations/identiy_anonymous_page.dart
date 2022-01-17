@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:convert';
+
 import 'package:finalert/global/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -88,90 +90,44 @@ class _IdentityAnonymousPageState extends State<IdentityAnonymousPage> {
                 lineHeight: 2.0,
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 backgroundColor: Colors.grey[200],
+                animation: true,
+                animationDuration: 1000,
                 percent: (level / 100.0),
                 progressColor:
                     (level <= 50.0) ? accentColor : Colors.green[800],
               ),
               Expanded(
                 child: Form(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10.0,
-                      vertical: 20.0,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        if (hasStepOne) ...[
-                          StepOnePage(
-                            hasAnonyme: widget.hasAnonymous,
-                            onNext: () {
-                              setState(() {
-                                hasStepOne = false;
-                                level = 100.0;
-                              });
-                            },
-                          ),
-                        ] else ...[
-                          StepTwoPage(),
-                        ]
-                      ],
+                  child: Center(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0,
+                        vertical: 20.0,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          if (hasStepOne) ...[
+                            StepOnePage(
+                              hasAnonyme: widget.hasAnonymous,
+                              onNext: () {
+                                setState(() {
+                                  hasStepOne = false;
+                                  level = 100.0;
+                                });
+                              },
+                            ),
+                          ] else ...[
+                            StepTwoPage(),
+                          ]
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class AttachmentBtn extends StatelessWidget {
-  final String title;
-  final bool hasFile;
-  final Function onPressed;
-  AttachmentBtn({
-    Key key,
-    this.title,
-    this.onPressed,
-    this.hasFile = false,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 80.0,
-      width: 100.0,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: hasFile ? accentSchemeColor : Colors.grey[300],
-        ),
-        color: Colors.grey[300],
-        borderRadius: BorderRadius.circular(5.0),
-      ),
-      child: Material(
-        borderRadius: BorderRadius.circular(5.0),
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(5.0),
-          onTap: onPressed,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.attach_file_rounded,
-                color: accentSchemeColor,
-                size: 20.0,
-              ),
-              const SizedBox(
-                height: 5.0,
-              ),
-              Text(title)
             ],
           ),
         ),

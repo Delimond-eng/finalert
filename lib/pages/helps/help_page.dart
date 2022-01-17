@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:finalert/global/style.dart';
+import 'package:finalert/global/url_launch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -74,58 +77,71 @@ class _HelpPageState extends State<HelpPage> {
                                         ),
                                         children: [
                                           Text(
-                                            "1. Je denonce ?",
-                                            textAlign: TextAlign.center,
+                                            "1. Je denonce",
                                             style: GoogleFonts.lato(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w600,
-                                              color: accentSchemeColor,
+                                              color: primaryColor,
                                             ),
                                           ),
                                           const SizedBox(
                                             height: 8.0,
                                           ),
-                                          const Padding(
+                                          Padding(
                                             padding: EdgeInsets.all(10.0),
                                             child: Text(
-                                                "Pour denoncer tout type de tracasseries:\n-cliquer sur le menu je denonce-choisir le type de dénonciation.\n-remplir les informations du plaignat\n-remplir les informations de l'accusé\n-joindre les preuves au cas où Vous recevrez un SMS avec le numero refence de la plainte que vous utiliserez pour suivre la plaintedans le menu suivre plainte"),
+                                              "Pour denoncer tout type de tracasseries:\n- cliquer sur le menu je denonce;\n- choisir le type de dénonciation;\n- remplir les informations du plaignat\n- remplir les informations de l'accusé;\n- joindre les preuves au cas où Vous recevrez un SMS avec le numero refence de la plainte que vous utiliserez pour suivre la plaintedans le menu suivre plainte",
+                                              textAlign: TextAlign.justify,
+                                              style: GoogleFonts.lato(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
                                           ),
                                           Text(
                                             "2. Nos annonces",
-                                            textAlign: TextAlign.center,
                                             style: GoogleFonts.lato(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w600,
-                                              color: accentSchemeColor,
+                                              color: primaryColor,
                                             ),
                                           ),
                                           const SizedBox(
                                             height: 8.0,
                                           ),
-                                          const Padding(
+                                          Padding(
                                             padding: EdgeInsets.all(10.0),
                                             child: Text(
-                                                "Rester connecté en recevant toutes les annonces provenant du ministere de finance"),
+                                              "Rester connecté en recevant toutes les annonces provenant du ministere de finance",
+                                              style: GoogleFonts.lato(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
                                           ),
                                           const SizedBox(
                                             height: 8.0,
                                           ),
                                           Text(
                                             "3. Suivi plainte",
-                                            textAlign: TextAlign.center,
                                             style: GoogleFonts.lato(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w600,
-                                              color: accentSchemeColor,
+                                              color: primaryColor,
                                             ),
                                           ),
                                           const SizedBox(
                                             height: 8.0,
                                           ),
-                                          const Padding(
-                                            padding: EdgeInsets.all(10.0),
+                                          Padding(
+                                            padding: const EdgeInsets.all(10.0),
                                             child: Text(
-                                                "Rechercher une plainte en mentionnant son numero reference dans la barre des recherches"),
+                                              "Rechercher une plainte en mentionnant son numero reference dans la barre des recherches",
+                                              style: GoogleFonts.lato(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -172,7 +188,7 @@ class _HelpPageState extends State<HelpPage> {
                                             "En savoir plus",
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.lato(
-                                              fontSize: 16.0,
+                                              fontSize: 18.0,
                                               fontWeight: FontWeight.w600,
                                               color: accentSchemeColor,
                                             ),
@@ -180,10 +196,15 @@ class _HelpPageState extends State<HelpPage> {
                                           const SizedBox(
                                             height: 8.0,
                                           ),
-                                          const Padding(
-                                            padding: EdgeInsets.all(10.0),
+                                          Padding(
+                                            padding: const EdgeInsets.all(10.0),
                                             child: Text(
-                                                "Chers plaignants (Mesdames et Messieurs), nous vous prions de bien vouloir communiquer avec le Ministère des Finances sur les cas de:\n\n - Plaintes pour tracasseries fiscales;\n - Dénonciation des cas de fraudes tant douanières que fiscales;\n - Dénonciation des cas de détournements des deniers publics; \n - Dénonciation des cas d’évasion fiscale.\n La bonne gouvernance implique :  \n\n - La responsabilité ; \n - L'obligation de rendre compte de ses actes ; \n - La participation ; \n - La capacité de répondre aux besoins de la population."),
+                                              "Chers plaignants (Mesdames et Messieurs), nous vous prions de bien vouloir communiquer avec le Ministère des Finances sur les cas de :\n\n - Plaintes pour tracasseries fiscales;\n - Dénonciation des cas de fraudes tant douanières que fiscales;\n - Dénonciation des cas de détournements des deniers publics; \n - Dénonciation des cas d’évasion fiscale.\n La bonne gouvernance implique :  \n\n - La responsabilité ; \n - L'obligation de rendre compte de ses actes ; \n - La participation ; \n - La capacité de répondre aux besoins de la population.",
+                                              style: GoogleFonts.lato(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -223,127 +244,61 @@ class _HelpPageState extends State<HelpPage> {
                                       child: ListView(
                                         controller: controller,
                                         padding: const EdgeInsets.symmetric(
-                                          horizontal: 10.0,
+                                          horizontal: 20.0,
                                         ),
                                         children: [
-                                          Row(
-                                            children: [
-                                              const Icon(Icons
-                                                  .arrow_right_alt_outlined),
-                                              Text(
-                                                "Déclarer la TVA mensuelle",
-                                                style: GoogleFonts.lato(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: accentSchemeColor,
-                                                ),
-                                              ),
-                                            ],
+                                          Text(
+                                            "Les autres application du Ministère des Finances",
+                                            style: GoogleFonts.lato(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w600,
+                                              color: accentSchemeColor,
+                                            ),
                                           ),
                                           const SizedBox(
-                                            height: 8.0,
+                                            height: 20.0,
                                           ),
-                                          Row(
-                                            children: [
-                                              const Icon(Icons
-                                                  .arrow_right_alt_outlined),
-                                              Text(
+                                          const AppTitle(
+                                            title: "Declarer la TVA mensuelle",
+                                          ),
+                                          const SizedBox(
+                                            height: 15.0,
+                                          ),
+                                          const AppTitle(
+                                            title:
                                                 "Demander une immatriculation",
-                                                style: GoogleFonts.lato(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: accentSchemeColor,
-                                                ),
-                                              ),
-                                            ],
                                           ),
                                           const SizedBox(
-                                            height: 8.0,
+                                            height: 15.0,
                                           ),
-                                          Row(
-                                            children: [
-                                              const Icon(Icons
-                                                  .arrow_right_alt_outlined),
-                                              Text(
-                                                "Demander le rembourssement",
-                                                style: GoogleFonts.lato(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: accentSchemeColor,
-                                                ),
-                                              ),
-                                            ],
+                                          const AppTitle(
+                                            title: "Demander le rembourssement",
                                           ),
                                           const SizedBox(
-                                            height: 8.0,
+                                            height: 15.0,
                                           ),
-                                          Row(
-                                            children: [
-                                              const Icon(Icons
-                                                  .arrow_right_alt_outlined),
-                                              Text(
-                                                "Declarer les stocks",
-                                                style: GoogleFonts.lato(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: accentSchemeColor,
-                                                ),
-                                              ),
-                                            ],
+                                          const AppTitle(
+                                            title: "Declarer les stocks",
                                           ),
                                           const SizedBox(
-                                            height: 8.0,
+                                            height: 15.0,
                                           ),
-                                          Row(
-                                            children: [
-                                              const Icon(Icons
-                                                  .arrow_right_alt_outlined),
-                                              Text(
+                                          const AppTitle(
+                                            title:
                                                 "Declarer les assujetissement à la TVA",
-                                                style: GoogleFonts.lato(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: accentSchemeColor,
-                                                ),
-                                              ),
-                                            ],
                                           ),
                                           const SizedBox(
-                                            height: 8.0,
+                                            height: 15.0,
                                           ),
-                                          Row(
-                                            children: [
-                                              const Icon(Icons
-                                                  .arrow_right_alt_outlined),
-                                              Text(
-                                                "Declarer IBP",
-                                                style: GoogleFonts.lato(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: accentSchemeColor,
-                                                ),
-                                              ),
-                                            ],
+                                          const AppTitle(
+                                            title: "Declarer IBP",
                                           ),
                                           const SizedBox(
-                                            height: 8.0,
+                                            height: 15.0,
                                           ),
-                                          Row(
-                                            children: [
-                                              const Icon(Icons
-                                                  .arrow_right_alt_outlined),
-                                              Text(
+                                          const AppTitle(
+                                            title:
                                                 "Declarer Acompte provisionnel",
-                                                style: GoogleFonts.lato(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: accentSchemeColor,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 8.0,
                                           ),
                                         ],
                                       ),
@@ -364,30 +319,50 @@ class _HelpPageState extends State<HelpPage> {
                         children: [
                           SocialIconBtn(
                             svg: "assets/icons/fb.svg",
+                            onPressed: () async {
+                              await Launch.launchInBrowser(
+                                  "https://web.facebook.com/MinFinRDCongo?_rdc=1&_rdr");
+                            },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10.0,
                           ),
                           SocialIconBtn(
                             svg: "assets/icons/insta.svg",
+                            onPressed: () async {
+                              await Launch.launchInBrowser(
+                                  "https://www.instagram.com/financesrdc/");
+                            },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10.0,
                           ),
                           SocialIconBtn(
                             svg: "assets/icons/twitter.svg",
+                            onPressed: () async {
+                              await Launch.launchInBrowser(
+                                  "https://twitter.com/financesrdc");
+                            },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10.0,
                           ),
                           SocialIconBtn(
                             svg: "assets/icons/youtube.svg",
+                            onPressed: () async {
+                              await Launch.launchInBrowser(
+                                  "https://www.youtube.com/channel/UCScvMp50UmxFv_D0LFceA8g/featured");
+                            },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10.0,
                           ),
                           SocialIconBtn(
                             svg: "assets/icons/web.svg",
+                            onPressed: () async {
+                              await Launch.launchInBrowser(
+                                  "https://finances.gouv.cd/");
+                            },
                           ),
                         ],
                       )
@@ -502,17 +477,62 @@ class _HelpPageState extends State<HelpPage> {
   }
 }
 
+class AppTitle extends StatelessWidget {
+  final String title;
+  const AppTitle({
+    Key key,
+    this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(5.0),
+          height: 25.0,
+          width: 25.0,
+          decoration: BoxDecoration(
+            color: Colors
+                .primaries[Random().nextInt(Colors.primaries.length)].shade900,
+            shape: BoxShape.circle,
+          ),
+          child: const Center(
+            child: Icon(
+              Icons.arrow_right_alt_outlined,
+              size: 12.0,
+              color: Colors.white,
+            ),
+          ),
+          margin: const EdgeInsets.only(right: 10.0),
+        ),
+        Text(
+          title,
+          style: GoogleFonts.lato(
+            fontSize: 16.0,
+            fontWeight: FontWeight.w400,
+            color: accentSchemeColor,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class SocialIconBtn extends StatelessWidget {
   final String svg;
+  final Function onPressed;
   const SocialIconBtn({
     Key key,
     this.svg,
+    this.onPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10.0),
       height: 40.0,
       width: 40.0,
       decoration: BoxDecoration(
@@ -526,8 +546,19 @@ class SocialIconBtn extends StatelessWidget {
           )
         ],
       ),
-      child: Center(
-        child: SvgPicture.asset(svg),
+      child: Material(
+        borderRadius: BorderRadius.circular(50.0),
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(50.0),
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Center(
+              child: SvgPicture.asset(svg),
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       vertical: 10.0,
                     ),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: .95,
+                      childAspectRatio: .9,
                       crossAxisCount: 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
@@ -241,10 +241,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 10.0,
                   ),
                   Text(
-                    "FinAlert",
+                    "FinAlerte",
                     style: GoogleFonts.lato(
                       color: Colors.white,
-                      fontSize: 28.0,
+                      fontSize: 25.0,
                       letterSpacing: 1.5,
                       fontWeight: FontWeight.w900,
                     ),
@@ -257,9 +257,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
                       color: Colors.white,
-                      fontSize: 18.0,
+                      fontSize: 16.0,
                       letterSpacing: 1.0,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w300,
                     ),
                   )
                 ],

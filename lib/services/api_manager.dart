@@ -23,17 +23,24 @@ class ApiManager {
     }
   }
 
-  static Future denoncerPlainte({Plainte plainte}) async {
+  static Future savePlainte(
+      {PlaintePlaignant infosPlaignant, PlainteAccuse infosAccuse}) async {
+    Map<String, dynamic> maps = {
+      ...infosPlaignant.toMap(),
+      ...infosAccuse.toMap(),
+    };
+    print(maps);
     var result;
     try {
       result = await ApiService.request(
         url: "tonocfapi/api/requestplaintes/Saveplainte",
-        body: plainte.toMap(),
+        body: maps,
         method: "post",
       );
     } catch (err) {
       print("error from home getdata void $err");
     }
+    print(result);
     if (result != null) {
       var json = jsonDecode(result);
       return json;

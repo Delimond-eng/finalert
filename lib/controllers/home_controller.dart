@@ -1,5 +1,6 @@
 import 'package:finalert/models/annonce_models.dart';
 import 'package:finalert/models/entity_models.dart';
+import 'package:finalert/models/plainte_model.dart';
 import 'package:finalert/models/provinces_models.dart';
 import 'package:finalert/models/territoires_models.dart';
 import 'package:finalert/models/type_plainte_models.dart';
@@ -14,6 +15,8 @@ class HomeController extends GetxController {
   var entites = <Entites>[].obs;
   var annonces = <Annonces>[].obs;
   var typePlaintes = <TypePlaintes>[].obs;
+
+  var plaignantInfos = PlaintePlaignant().obs;
 
   @override
   void onInit() {
