@@ -34,7 +34,6 @@ class ApiService {
         );
         break;
     }
-    //print(response.body);
     if (response.statusCode == 200) {
       return response.body;
     } else {

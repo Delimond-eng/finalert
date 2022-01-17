@@ -1,7 +1,6 @@
 import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:finalert/models/plainte_model.dart';
+import 'package:http/http.dart' as http;
 
 import 'api_service.dart';
 
@@ -30,25 +29,24 @@ class ApiManager {
       ...infosPlaignant.toMap(),
       ...infosAccuse.toMap(),
     };
-   var result;
+    //print("Data : ******* $maps ******");
+    http.Response result;
     try {
-      result = await ApiService.request(
-        url: "http://finalert.rtgroup-rdc.com/plaintes/nouvellePlainte",
-        body:maps,
-        method: "post",
+      result =await http.post(
+        Uri.parse("https://finalert.rtgroup-rdc.com/plaintes/nouvellePlainte"),
+        body: jsonEncode(maps),
       );
     } catch (err) {
       print("error from home getdata void $err");
     }
-    if (result != null) {
+    var jsonData = jsonDecode(result.body);
+    print("result $jsonData");
+    /*if (result != null) {
       var json = jsonDecode(result);
       return json;
     } else {
       return null;
-    }
-
-
-
+    }*/
     /*var response = await Dio().post("https://finalertemanage.com/tonocfapi/api/requestplaintes/Saveplainte", data: {
       "Civilite":infosPlaignant.civilitePlaignant,
       "Noms":infosPlaignant.nomPlaignant,

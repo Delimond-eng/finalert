@@ -371,6 +371,7 @@ class _StepOnePageState extends State<StepOnePage> {
                     gpsAlt: "+458884800",
                     gpsLat: "5454848484",
                     gpsLong: "878844444",
+                    gpsPs: "201219942",
                     provincePlaignantId: selectedRegion.id,
                     territoirePlaignantId: selectedCity.id,
                   );

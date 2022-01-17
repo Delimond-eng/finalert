@@ -21,7 +21,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 
 class StepTwoPage extends StatefulWidget {
   StepTwoPage({Key key}) : super(key: key);
@@ -456,7 +455,7 @@ class _StepTwoPageState extends State<StepTwoPage> {
                   hasFile: hasFile1,
                   image: preuveStrImage,
                   onPressed: () async {
-                    var picked = await takePhoto(source: ImageSource.gallery);
+                    /*var picked = await takePhoto(source: ImageSource.gallery);
                     var imageBytes = File(picked.path).readAsBytesSync();
                     var strImage = base64Encode(imageBytes);
 
@@ -465,7 +464,7 @@ class _StepTwoPageState extends State<StepTwoPage> {
                         hasFile1 = true;
                         preuveStrImage = strImage;
                       });
-                    }
+                    }*/
                   },
                 ),
                 AttachmentBtn(
@@ -524,6 +523,7 @@ class _StepTwoPageState extends State<StepTwoPage> {
                 provinceAccuse: selectedRegion.libelleVille,
                 serviceAccuse: textService.text,
                 territoireAccuse: selectedCity.libelleTerritoire,
+
                 typePreuve: "hdhdhd"
               );
               Xloading.showLoading(context);
@@ -532,39 +532,37 @@ class _StepTwoPageState extends State<StepTwoPage> {
                       infosPlaignant: homeController.plaignantInfos.value)
                   .then((res) {
                 Xloading.dismiss();
-                if(res !=null){
-                  Modal.show(
-                    context,
-                    height: 200.0,
-                    color: Colors.green[700],
-                    title: "Succès !",
-                    modalContent: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                        child: StatefulBuilder(
-                          builder: (context, setter) {
-                            return SingleChildScrollView(
-                              padding: EdgeInsets.all(20.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Votre plainte a été enregistrée avec succès !",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.lato(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                /*Modal.show(
+                  context,
+                  height: 200.0,
+                  color: Colors.green[700],
+                  title: "Succès !",
+                  modalContent: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                      child: StatefulBuilder(
+                        builder: (context, setter) {
+                          return SingleChildScrollView(
+                            padding: EdgeInsets.all(20.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Votre plainte a été enregistrée avec succès !",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.lato(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w400,
                                   ),
+                                ),
 
-                                  // ignore: sized_box_for_whitespace
-                                ],
-                              ),
-                            );
-                          },
-                        )),
-                  );
-                }
+                                // ignore: sized_box_for_whitespace
+                              ],
+                            ),
+                          );
+                        },
+                      )),
+                );*/
               });
             },
           ),
