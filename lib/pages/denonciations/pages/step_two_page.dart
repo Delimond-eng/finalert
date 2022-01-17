@@ -532,7 +532,8 @@ class _StepTwoPageState extends State<StepTwoPage> {
                       infosPlaignant: homeController.plaignantInfos.value)
                   .then((res) {
                 Xloading.dismiss();
-                /*Modal.show(
+                if(res !=null){
+                  Modal.show(
                   context,
                   height: 200.0,
                   color: Colors.green[700],
@@ -542,27 +543,27 @@ class _StepTwoPageState extends State<StepTwoPage> {
                       child: StatefulBuilder(
                         builder: (context, setter) {
                           return SingleChildScrollView(
-                            padding: EdgeInsets.all(20.0),
+                            padding: EdgeInsets.all(10.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Votre plainte a été enregistrée avec succès !",
+                                  "Votre plainte a été enregistrée avec succès,\n vous allez recevoir un message contenant la référence de votre plainte pour le suivi via ce numéro : +${homeController.plaignantInfos.value.telephonePlaignant}  ",
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
-                                    fontSize: 20.0,
+                                    fontSize: 15.0,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-
                                 // ignore: sized_box_for_whitespace
                               ],
                             ),
                           );
                         },
                       )),
-                );*/
+                );
+                }
               });
             },
           ),

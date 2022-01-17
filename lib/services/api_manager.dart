@@ -33,14 +33,21 @@ class ApiManager {
     http.Response result;
     try {
       result =await http.post(
-        Uri.parse("https://finalert.rtgroup-rdc.com/plaintes/nouvellePlainte"),
+        Uri.parse("http://finalert.rtgroup-rdc.com/plaintes/nouvellePlainte"),
         body: jsonEncode(maps),
       );
     } catch (err) {
       print("error from home getdata void $err");
     }
-    var jsonData = jsonDecode(result.body);
-    print("result $jsonData");
+
+    if(result.statusCode ==200){
+      var jsonData = jsonDecode(result.body);
+      return jsonData;
+    }
+    else {
+      return null;
+    }
+
     /*if (result != null) {
       var json = jsonDecode(result);
       return json;
