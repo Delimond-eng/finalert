@@ -35,6 +35,18 @@ class _StepOnePageState extends State<StepOnePage> {
 
   List<Territoires> territoires = [];
 
+  getEmptyRegion({Provinces value}) {
+    setState(() {
+      selectedRegion = value;
+    });
+  }
+
+  getEmptyCity({Territoires value}) {
+    setState(() {
+      selectedCity = value;
+    });
+  }
+
   //textEditing
   String selectedCategoryUser = "";
   final TextEditingController textNom = TextEditingController();
@@ -219,6 +231,7 @@ class _StepOnePageState extends State<StepOnePage> {
                       );
                     }).toList(),
                     onChanged: (value) {
+                      getEmptyCity();
                       setState(() {
                         hasRegionError = false;
                         selectedRegion = value;

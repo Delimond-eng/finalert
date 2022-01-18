@@ -45,6 +45,30 @@ class _StepTwoPageState extends State<StepTwoPage> {
   bool hasFile1 = false;
   List<Territoires> territoires = [];
 
+  getEmptyRegion({Provinces value}) {
+    setState(() {
+      selectedRegion = value;
+    });
+  }
+
+  getEmptyCity({Territoires value}) {
+    setState(() {
+      selectedCity = value;
+    });
+  }
+
+  getEmptyEntity({Entites value}) {
+    setState(() {
+      selectedEntity = value;
+    });
+  }
+
+  getEmptyPlainte({TypePlaintes value}) {
+    setState(() {
+      selectedMotif = value;
+    });
+  }
+
   //textField
   final TextEditingController textNom = TextEditingController();
   final TextEditingController textService = TextEditingController();
@@ -280,6 +304,7 @@ class _StepTwoPageState extends State<StepTwoPage> {
                     );
                   }).toList(),
                   onChanged: (value) {
+                    getEmptyCity();
                     setState(() {
                       hasRegionError = false;
                       selectedRegion = value;
@@ -517,52 +542,57 @@ class _StepTwoPageState extends State<StepTwoPage> {
                 }
               });
               PlainteAccuse info2 = PlainteAccuse(
-                motifAccuse: selectedMotif.libelleTypePlainte,
-                entiteAccuse: selectedEntity.nomEntite,
-                nomAccuse: textNom.text,
-                provinceAccuse: selectedRegion.libelleVille,
-                serviceAccuse: textService.text,
-                territoireAccuse: selectedCity.libelleTerritoire,
-
-                typePreuve: "hdhdhd"
-              );
+                  motifAccuse: selectedMotif.libelleTypePlainte,
+                  entiteAccuse: selectedEntity.nomEntite,
+                  nomAccuse: textNom.text,
+                  provinceAccuse: selectedRegion.libelleVille,
+                  serviceAccuse: textService.text,
+                  territoireAccuse: selectedCity.libelleTerritoire,
+                  typePreuve: "hdhdhd");
               Xloading.showLoading(context);
               await ApiManager.savePlainte(
                       infosAccuse: info2,
                       infosPlaignant: homeController.plaignantInfos.value)
                   .then((res) {
                 Xloading.dismiss();
-                if(res !=null){
+                if (res != null) {
                   Modal.show(
-                  context,
-                  height: 200.0,
-                  color: Colors.green[700],
-                  title: "Succès !",
-                  modalContent: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                      child: StatefulBuilder(
-                        builder: (context, setter) {
-                          return SingleChildScrollView(
-                            padding: EdgeInsets.all(10.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Votre plainte a été enregistrée avec succès,\n vous allez recevoir un message contenant la référence de votre plainte pour le suivi via ce numéro : +${homeController.plaignantInfos.value.telephonePlaignant}  ",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.lato(
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w400,
+                    context,
+                    height: 200.0,
+                    color: Colors.green[700],
+                    title: "Succès !",
+                    modalContent: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 10),
+                        child: StatefulBuilder(
+                          builder: (context, setter) {
+                            return SingleChildScrollView(
+                              padding: EdgeInsets.all(10.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Votre plainte a été enregistrée avec succès,\n vous allez recevoir un message contenant la référence de votre plainte pour le suivi via ce numéro : +${homeController.plaignantInfos.value.telephonePlaignant}  ",
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.lato(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                                // ignore: sized_box_for_whitespace
-                              ],
-                            ),
-                          );
-                        },
-                      )),
-                );
+                                  // ignore: sized_box_for_whitespace
+                                ],
+                              ),
+                            );
+                          },
+                        )),
+                  );
+
+                  //empty all dropdown
+                  getEmptyCity();
+                  getEmptyRegion();
+                  getEmptyEntity();
+                  getEmptyPlainte();
                 }
               });
             },
