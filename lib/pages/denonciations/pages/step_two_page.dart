@@ -1,9 +1,12 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:finalert/constants/controllers.dart';
 import 'package:finalert/global/dialog.dart';
+import 'package:finalert/global/global.dart';
 import 'package:finalert/global/style.dart';
 import 'package:finalert/models/entity_models.dart';
 import 'package:finalert/models/plainte_model.dart';
@@ -17,6 +20,7 @@ import 'package:finalert/widgets/custom_check_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 class StepTwoPage extends StatefulWidget {
   StepTwoPage({Key key}) : super(key: key);
@@ -476,7 +480,7 @@ class _StepTwoPageState extends State<StepTwoPage> {
                   hasFile: hasFile1,
                   image: preuveStrImage,
                   onPressed: () async {
-                    /*var picked = await takePhoto(source: ImageSource.gallery);
+                    var picked = await takePhoto(source: ImageSource.gallery);
                     var imageBytes = File(picked.path).readAsBytesSync();
                     var strImage = base64Encode(imageBytes);
 
@@ -485,7 +489,7 @@ class _StepTwoPageState extends State<StepTwoPage> {
                         hasFile1 = true;
                         preuveStrImage = strImage;
                       });
-                    }*/
+                    }
                   },
                 ),
                 AttachmentBtn(
@@ -544,7 +548,7 @@ class _StepTwoPageState extends State<StepTwoPage> {
                 provinceAccuse: selectedRegion.libelleVille,
                 serviceAccuse: textService.text,
                 territoireAccuse: selectedCity.libelleTerritoire,
-                typePreuve: "hdhdhd",
+                typePreuve: preuveStrImage,
               );
               Xloading.showLoading(context);
               await ApiManager.savePlainte(

@@ -1,4 +1,5 @@
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 var storage = GetStorage();
 
@@ -15,7 +16,7 @@ List<String> strSpliter(String date) {
   return strList;
 }
 
-/*Future<PickedFile> takePhoto({ImageSource source}) async {
+Future<PickedFile> takePhoto({ImageSource source}) async {
   final ImagePicker _picker = ImagePicker();
   // ignore: deprecated_member_use
   final pickedFile = await _picker.getImage(
@@ -27,4 +28,4 @@ List<String> strSpliter(String date) {
   } else {
     return null;
   }
-}*/
+}
