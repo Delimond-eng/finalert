@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 
 import 'controllers/home_controller.dart';
 import 'screen/home_screen.dart';
+import 'services/location_service.dart' as pos;
 
 void main() async {
   await GetStorage.init();
@@ -13,6 +14,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+  await pos.getUserPosition();
   runApp(const MyApp());
 }
 

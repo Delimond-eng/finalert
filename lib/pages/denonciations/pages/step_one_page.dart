@@ -10,12 +10,15 @@ import 'package:finalert/widgets/custom_check_box.dart';
 import 'package:finalert/widgets/custom_form_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:device_information/device_information.dart';
+import 'package:finalert/services/location_service.dart' as pos;
 
 class StepOnePage extends StatefulWidget {
   final bool hasAnonyme;
   final Function onNext;
-  StepOnePage({Key key, this.onNext, this.hasAnonyme}) : super(key: key);
+  const StepOnePage({Key key, this.onNext, this.hasAnonyme}) : super(key: key);
 
   @override
   _StepOnePageState createState() => _StepOnePageState();
@@ -362,7 +365,7 @@ class _StepOnePageState extends State<StepOnePage> {
                 "Suivant",
                 style: GoogleFonts.lato(color: Colors.white),
               ),
-              onPressed: () {
+              onPressed: () async {
                 setState(() {
                   if (selectedRegion == null) {
                     hasRegionError = true;
@@ -374,23 +377,37 @@ class _StepOnePageState extends State<StepOnePage> {
                   }
                 });
                 if (_formKey.currentState.validate()) {
-                  PlaintePlaignant infos = PlaintePlaignant(
-                    nomPlaignant: textNom.text,
-                    telephonePlaignant: "243${textPhone.text}",
-                    emailPlaignant: textEmail.text,
-                    adressePlaignant: textAdresse.text,
-                    civilitePlaignant: selectedCategoryUser,
-                    phonePlaignantId: "1254548dAJEEUE",
-                    gpsAlt: "+458884800",
-                    gpsLat: "5454848484",
-                    gpsLong: "878844444",
-                    gpsPs: "201219942",
-                    provincePlaignantId: selectedRegion.id,
-                    territoirePlaignantId: selectedCity.id,
-                  );
-                  homeController.plaignantInfos.value = infos;
+                  var position = await pos.getUserPosition();
+                  if (position != null) {
+                    String phoneId = "";
+                    try {
+                      phoneId = await DeviceInformation.deviceIMEINumber;
+                    } catch (e) {
+                      print("no phone id found !");
+                    }
+                    List<Placemark> placemarks = await placemarkFromCoordinates(
+                        position.latitude, position.longitude);
 
-                  widget.onNext();
+                    Placemark place = placemarks[0];
+                    PlaintePlaignant infos = PlaintePlaignant(
+                      nomPlaignant: textNom.text,
+                      telephonePlaignant: "243${textPhone.text}",
+                      emailPlaignant: textEmail.text,
+                      adressePlaignant: textAdresse.text,
+                      civilitePlaignant: selectedCategoryUser,
+                      phonePlaignantId: phoneId,
+                      gpsAlt: "${position.altitude}",
+                      gpsLat: "${position.latitude}",
+                      gpsLong: "${position.longitude}",
+                      gpsPs:
+                          " ${place.street}, ${place.subLocality}, ${place.locality}, ${place.country}",
+                      provincePlaignantId: selectedRegion.id,
+                      territoirePlaignantId: selectedCity.id,
+                    );
+                    homeController.plaignantInfos.value = infos;
+                    widget.onNext();
+                    //print(infos.toMap());
+                  }
                 }
               },
             ),

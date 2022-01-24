@@ -1,12 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
-import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
 
 import 'package:finalert/constants/controllers.dart';
 import 'package:finalert/global/dialog.dart';
-import 'package:finalert/global/global.dart';
 import 'package:finalert/global/style.dart';
 import 'package:finalert/models/entity_models.dart';
 import 'package:finalert/models/plainte_model.dart';
@@ -19,7 +16,6 @@ import 'package:finalert/widgets/costum_field.dart';
 import 'package:finalert/widgets/custom_check_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class StepTwoPage extends StatefulWidget {
@@ -542,18 +538,19 @@ class _StepTwoPageState extends State<StepTwoPage> {
                 }
               });
               PlainteAccuse info2 = PlainteAccuse(
-                  motifAccuse: selectedMotif.libelleTypePlainte,
-                  entiteAccuse: selectedEntity.nomEntite,
-                  nomAccuse: textNom.text,
-                  provinceAccuse: selectedRegion.libelleVille,
-                  serviceAccuse: textService.text,
-                  territoireAccuse: selectedCity.libelleTerritoire,
-                  typePreuve: "hdhdhd");
+                motifAccuse: selectedMotif.libelleTypePlainte,
+                entiteAccuse: selectedEntity.nomEntite,
+                nomAccuse: textNom.text,
+                provinceAccuse: selectedRegion.libelleVille,
+                serviceAccuse: textService.text,
+                territoireAccuse: selectedCity.libelleTerritoire,
+                typePreuve: "hdhdhd",
+              );
               Xloading.showLoading(context);
               await ApiManager.savePlainte(
-                      infosAccuse: info2,
-                      infosPlaignant: homeController.plaignantInfos.value)
-                  .then((res) {
+                infosAccuse: info2,
+                infosPlaignant: homeController.plaignantInfos.value,
+              ).then((res) {
                 Xloading.dismiss();
                 if (res != null) {
                   Modal.show(
